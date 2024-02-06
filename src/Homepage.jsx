@@ -19,11 +19,9 @@ export default function Homepage() {
   }, []); 
 
   return (
-    <section>
-      <div className="featured-articles">
-        <h2>Articles</h2>
-       <Articles articles={articles} />
-      </div>
-    </section>
+    <div className="articles">
+      <Articles articles={articles}/>
+    
+  </div>
   );
 }
