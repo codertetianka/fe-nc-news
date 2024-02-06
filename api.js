@@ -10,3 +10,13 @@ export const getAllArticles = async () => {
     throw new Error('Error fetching articles:"');
   }
 };
+
+export const getArticleById = async (id) => {
+  try {
+    const response = await axios.get(`${baseUrl}/articles/${id}`);
+    return response.data.article;
+  } catch (error) {
+    console.error("Error fetching article:", error);
+    throw error;
+  }
+};

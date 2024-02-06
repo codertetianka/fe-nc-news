@@ -1,33 +1,26 @@
-import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import Root from "../routes/root";
 import ErrorPage from "../routes/404";
 import Header from "../components/Header"
 import Homepage from "./Homepage";
+import ArticlePage from "../components/ArticlePage";
+import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 
-const router = createBrowserRouter([
-  {
-    path: "/",
-    element: <Root />,
-    errorElement: <ErrorPage />,
-    children: [
-      {
-        path: "/",
-        element: <Homepage />,
-      },
-      {
-        path: "/login",
-        element: <Homepage />,
-      }
-    ],
-  },
-]);
+
 
 function App() {
   return (
-    <>
+    <Router>
       <Header />
-      <RouterProvider router={router} />
-    </>
+      <Routes>
+        <Route path="/" element={<Root />}>
+          <Route index element={<Homepage />} />
+          <Route path="/login" element={<Homepage />} />
+          <Route path="/articles/:articleid" element={<ArticlePage />} />
+        </Route>
+        
+        <Route path="*" element={<ErrorPage />} />
+      </Routes>
+    </Router>
   );
 }
 
