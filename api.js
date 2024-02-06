@@ -20,3 +20,13 @@ export const getArticleById = async (id) => {
     throw error;
   }
 };
+
+export const getCommentsByArticleID = async (id) => {
+  try {
+    const response = await axios.get(`${baseUrl}/articles/${id}/comments`);
+    return response.data.comments;
+  } catch (error) {
+    console.error("Error fetching comments:", error);
+    throw error;
+  }
+};

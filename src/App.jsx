@@ -2,6 +2,7 @@ import Root from "../routes/root";
 import ErrorPage from "../routes/404";
 import Header from "../components/Header"
 import Homepage from "./Homepage";
+import './App.css';
 import ArticlePage from "../components/ArticlePage";
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 
