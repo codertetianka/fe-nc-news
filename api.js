@@ -30,3 +30,16 @@ export const getCommentsByArticleID = async (id) => {
     throw error;
   }
 };
+
+export const patchArticleVotes = async (id, vote) => {
+  console.log(vote);
+  try {
+    const response = await axios.patch(`${baseUrl}/articles/${id}`, {
+      newVote: vote,
+    });
+    return response.data;
+  } catch (error) {
+    console.error("Error patching article votes:", error);
+    throw error;
+  }
+};
