@@ -3,6 +3,8 @@ import { useNavigate, useParams } from "react-router-dom";
 import { getArticleById } from "../api";
 import { getCommentsByArticleID } from '../api';
 import Comments from '../components/Comments';
+import Vote from '../components/Vote';
+
 
 function ArticlePage() {
   const [article, setArticle] = useState(null);
@@ -11,6 +13,7 @@ function ArticlePage() {
   const [comments, setComments] = useState([])
   const navigate = useNavigate();
   const { articleid } = useParams();
+
 
   useEffect(() => {
     const loadArticle = async () => {
@@ -62,7 +65,10 @@ function ArticlePage() {
       <section className="comment-section mt-3 text-white">
         <p>Comments: {article.comment_count}</p>
         <Comments comments={comments} articleid={articleid} />
-        <p>Votes: {article.votes}</p>
+      
+        <section className="vote-comment-section">
+              <Vote article={article} />
+              </section>
         <small style={{ color: '#dee2e6' }}>
     Published on: {new Date(article.created_at).toLocaleDateString()} <br />
   </small>
