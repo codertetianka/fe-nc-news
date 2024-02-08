@@ -2,7 +2,6 @@ import { useState, useContext } from "react";
 import { postCommentToArticleById } from "../api";
 import { UserContext } from "../contexts/user";
 
-
 function PostComment({ articleId }) {
   const { user } = useContext(UserContext);
   const [comment, setComment] = useState("");
@@ -20,7 +19,7 @@ function PostComment({ articleId }) {
     }
 
     try {
-      if (user && user.username) {
+      if (user && user.username === 'tickle122') {
         await postCommentToArticleById(articleId, {
           author: user.username,
           body: comment,
@@ -29,7 +28,7 @@ function PostComment({ articleId }) {
         setComment("");
         setCommentStatus("posted");
       } else {
-        throw new Error("User is not logged in.");
+        throw new Error("You are not authorized to post comments.");
       }
     } catch (error) {
       console.error("Error posting comment:", error);
@@ -74,7 +73,7 @@ function PostComment({ articleId }) {
           disabled={buttonDisabled}
           style={{ backgroundColor: "#008b00", borderColor: "#008b00" }} 
         >
-          {buttonDisabled ? "Posting..." : <>Post Comment</>}
+          {buttonDisabled ? "Posting..." : "Post Comment"}
         </button>
       </form>
     </div>
