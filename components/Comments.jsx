@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { getCommentsByArticleID } from "../api";
 import Card from 'react-bootstrap/Card';
+import { Heart } from 'react-bootstrap-icons'
 
 const Comments = ({ articleid }) => {
   const [articleComments, setArticleComments] = useState([]);
@@ -26,7 +27,7 @@ const Comments = ({ articleid }) => {
             <Card.Body>
               <Card.Text>{comment.body}</Card.Text>
               <Card.Subtitle className="mb-2 text-muted">{comment.author}</Card.Subtitle>
-              <Card.Text>Likes: {comment.votes}</Card.Text>
+              <Card.Text><Heart /> {comment.votes}</Card.Text>
             </Card.Body>
           </Card>
         ))
