@@ -32,7 +32,6 @@ export const getCommentsByArticleID = async (id) => {
 };
 
 export const patchArticleVotes = async (id, vote) => {
-  console.log(vote);
   try {
     const response = await axios.patch(`${baseUrl}/articles/${id}`, {
       newVote: vote,
@@ -40,6 +39,27 @@ export const patchArticleVotes = async (id, vote) => {
     return response.data;
   } catch (error) {
     console.error("Error patching article votes:", error);
+    throw error;
+  }
+};
+
+export const postCommentToArticleById = async (
+  article_id,
+  newCommentDetail
+) => {
+  const { author, body, votes } = newCommentDetail;
+  try {
+    const response = await axios.post(
+      `${baseUrl}/articles/${article_id}/comments`,
+      {
+        username: author,
+        body: body,
+        votes: votes,
+      }
+    );
+    return response.data.newComment;
+  } catch (error) {
+    console.error("Error posting comment:", error);
     throw error;
   }
 };

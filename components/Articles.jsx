@@ -11,14 +11,17 @@ const Articles = ({ articles }) => {
         {articles?.map((article) => (
           <Col key={article.article_id} style={{ marginBottom: 12 }}>
             <Card 
-            border="success"
-            bg="dark"
-              text="white">
+              border="success"
+              bg="dark"
+              text="white"
+            >
               <Link to={`/articles/${article.article_id}`}>
                 <Card.Img variant="top" src={article.article_img_url} alt={article.title} className="article-image" />
               </Link>
               <Card.Body>
-                <Card.Title>{article.title}</Card.Title>
+                <Link to={`/articles/${article.article_id}`} style={{ textDecoration: 'none', color: 'inherit' }}>
+                  <Card.Title>{article.title}</Card.Title>
+                </Link>
                 <Card.Text>
                   Author: {article.author} <br />
                   Votes: {article.votes} <br />
@@ -26,10 +29,10 @@ const Articles = ({ articles }) => {
                 </Card.Text>
               </Card.Body>
               <Card.Footer>
-  <small style={{ color: '#dee2e6' }}>
-    Published on: {new Date(article.created_at).toLocaleDateString()} <br />
-  </small>
-</Card.Footer>
+                <small style={{ color: '#dee2e6' }}>
+                  Published on: {new Date(article.created_at).toLocaleDateString()} <br />
+                </small>
+              </Card.Footer>
             </Card>
           </Col>
         ))}

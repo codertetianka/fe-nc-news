@@ -4,6 +4,8 @@ import { getArticleById } from "../api";
 import { getCommentsByArticleID } from '../api';
 import Comments from '../components/Comments';
 import Vote from '../components/Vote';
+import PostComment from "../components/PostComment";
+
 
 
 function ArticlePage() {
@@ -45,14 +47,16 @@ function ArticlePage() {
   if (!article) {
     return <p>Article not found</p>;
   }
-
   return (
     <article className="container article mt-5">
       <header className="article-header">
         <h2 className="hover-item">{article.title}</h2>
         <p className="text-white">Author: {article.author}</p>
       </header>
-      <div className="article-body text-white" dangerouslySetInnerHTML={{ __html: article.body }}></div>
+      <div
+        className="article-body text-white"
+        dangerouslySetInnerHTML={{ __html: article.body }}
+      ></div>
       <img
         onClick={() => {
           navigate(`/articles/${article.article_id}`);
@@ -65,13 +69,14 @@ function ArticlePage() {
       <section className="comment-section mt-3 text-white">
         <p>Comments: {article.comment_count}</p>
         <Comments comments={comments} articleid={articleid} />
-      
         <section className="vote-comment-section">
-              <Vote article={article} />
-              </section>
-        <small style={{ color: '#dee2e6' }}>
-    Published on: {new Date(article.created_at).toLocaleDateString()} <br />
-  </small>
+          <Vote article={article} />
+          <PostComment articleId={articleid} />
+        </section>
+        <small style={{ color: "#dee2e6" }}>
+          Published on: {new Date(article.created_at).toLocaleDateString()}{" "}
+          <br />
+        </small>
       </section>
     </article>
   );
