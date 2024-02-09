@@ -73,3 +73,13 @@ export const deleteCommentById = async (commentId) => {
     throw error;
   }
 };
+
+export const getTopics = async () => {
+  try {
+    const response = await axios.get(`${baseUrl}/topics`);
+    return response.data.topics;
+  } catch (error) {
+    console.error("Error fetching topics:", error);
+    throw error;
+  }
+};

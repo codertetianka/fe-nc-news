@@ -2,31 +2,34 @@ import { useState, useContext } from "react";
 import { postCommentToArticleById } from "../api";
 import { UserContext } from "../contexts/user";
 
-function PostComment({ articleId }) {
+function PostComment({ articleId, onCommentPosted }) {
   const { user } = useContext(UserContext);
   const [comment, setComment] = useState("");
   const [commentStatus, setCommentStatus] = useState(null);
   const [buttonDisabled, setButtonDisabled] = useState(false);
+  const [postedComment, setPostedComment] = useState(null); 
 
   const handleSubmit = async (event) => {
     event.preventDefault();
     setButtonDisabled(true);
-
+  
     if (!comment.trim()) {
       setCommentStatus("empty");
       setButtonDisabled(false);
       return;
     }
-
+  
     try {
       if (user && user.username === 'tickle122') {
-        await postCommentToArticleById(articleId, {
+        const newComment = await postCommentToArticleById(articleId, {
           author: user.username,
           body: comment,
           votes: 0,
         });
+        setPostedComment(newComment); 
         setComment("");
         setCommentStatus("posted");
+        onCommentPosted();
       } else {
         throw new Error("You are not authorized to post comments.");
       }
@@ -49,6 +52,12 @@ function PostComment({ articleId }) {
         )}
         {commentStatus === "empty" && (
           <p className="alert alert-warning">Please enter a comment</p>
+        )}
+        {postedComment && (
+          <div className="alert alert-info">
+            <p>New comment:</p>
+            <p>{postedComment.body}</p>
+          </div>
         )}
         <div className="mb-3">
           <label htmlFor="comment-body" className="form-label">
