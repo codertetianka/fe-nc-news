@@ -4,22 +4,10 @@ import Card from 'react-bootstrap/Card';
 import { Heart } from 'react-bootstrap-icons';
 import { UserContext } from "../contexts/user";
 
-const Comments = ({ articleid }) => {
-  const [articleComments, setArticleComments] = useState([]);
+const Comments = ({ articleid, comments, setComments }) => {
+  
   const { user } = useContext(UserContext);
   
-  useEffect(() => {
-    const fetchComments = async () => {
-      try {
-        const comments = await getCommentsByArticleID(articleid);
-        setArticleComments(comments);
-      } catch (error) {
-        console.error("Error fetching comments:", error);
-      }
-    };
-
-    fetchComments();
-  }, [articleid]);
 
   const isUserAuthorized = (commentAuthor) => {
     return user && user.username === 'tickle122' && user.username === commentAuthor;
@@ -28,7 +16,7 @@ const Comments = ({ articleid }) => {
   const handleDeleteComment = async (commentId) => {
     try {
       await deleteCommentById(commentId); 
-      setArticleComments(articleComments.filter(comment => comment.comment_id !== commentId));
+      setComments(comments.filter(comment => comment.comment_id !== commentId));
     } catch (error) {
       console.error("Error deleting comment:", error);
     }
@@ -36,8 +24,11 @@ const Comments = ({ articleid }) => {
 
   return (
     <div className="comments-list">
-      {articleComments?.length ? (
-        articleComments.map((comment) => (
+      {comments === "error" && ( 
+        <p className="alert alert-danger">Failed to fetch comments. Please try again later.</p>
+      )}
+      {comments?.length ? (
+        comments.map((comment) => (
           <Card key={comment.comment_id} bg="dark" text="white" className="mb-3">
             <Card  bg="dark" text="white" className="mb-3">{comment.author}</Card>
             <Card.Body>

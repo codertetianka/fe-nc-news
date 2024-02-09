@@ -1,5 +1,4 @@
-import { Outlet } from "react-router-dom";
-import { useLocation } from 'react-router-dom';
+import { Link, Outlet, useLocation } from "react-router-dom";
 
 export default function Root() {
   let location = useLocation();
@@ -9,12 +8,18 @@ export default function Root() {
       <nav>
         <ul>
           <li>
-            <a href={`/`} className="dashboardHome">Home</a>
+            <Link to="/" className="dashboardHome">Home</Link>
           </li>
-         
-          {!location.pathname.startsWith('/login') && <li className="dashboardLink">
-            <a href={`/dashboard`}>Login or Register</a>
-          </li>}
+          {!location.pathname.startsWith('/login') && (
+            <>
+              <li className="dashboardLink">
+                <Link to="/dashboard">Login or Register</Link>
+              </li>
+              <li>
+                <Link to="/topics">Topics</Link>
+              </li>
+            </>
+          )}
         </ul>
       </nav>
       <Outlet />

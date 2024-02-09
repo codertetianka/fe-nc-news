@@ -16,6 +16,9 @@
 li {
   list-style: none;
 }
+h1 {
+  color: white;
+}
 h2 {
   color: #008b00;
   text-align: center;
@@ -36,13 +39,8 @@ a:hover {
 
 body {
   background-color: #323234;
-  margin: 0;
-  display: flex;
-  place-items: center;
-  min-width: 320px;
-  min-height: 100vh;
+  
 }
-
 
 
 @media (prefers-color-scheme: light) {
@@ -56,4 +54,26 @@ body {
   button {
     background-color: #f9f9f9;
   }
+}
+
+.error {
+  color: #ff4a4a;
+}
+
+html, body, #root {
+  width: 100%;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
+.page {
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+}
+
+.topics-li a {
+  font-size: 26px;
 }

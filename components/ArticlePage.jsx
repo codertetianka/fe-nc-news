@@ -16,22 +16,25 @@ function ArticlePage() {
   const navigate = useNavigate();
   const { articleid } = useParams();
 
+  const loadArticle = async () => {
+    try {
+      setError(undefined);
+      const articleData = await getArticleById(articleid);
+      setArticle(articleData);
+      const commentsData = await getCommentsByArticleID(articleid);
+      
+      setComments(commentsData);
+      setLoading(false);
+    } catch (error) {
+      setError(error)
+      console.error("Error fetching article:", error);
+      setLoading(false);
+    }
+  };
+
 
   useEffect(() => {
-    const loadArticle = async () => {
-      try {
-        setError(undefined);
-        const articleData = await getArticleById(articleid);
-        setArticle(articleData);
-        const commentsData = await getCommentsByArticleID(articleid);
-        setComments(commentsData);
-        setLoading(false);
-      } catch (error) {
-        setError(error)
-        console.error("Error fetching article:", error);
-        setLoading(false);
-      }
-    };
+   
 
     loadArticle();
   }, [articleid, loading]);
@@ -68,10 +71,12 @@ function ArticlePage() {
       />
       <section className="comment-section mt-3 text-white">
         <p>Comments: {article.comment_count}</p>
-        <Comments comments={comments} articleid={articleid} />
+        <Comments comments={comments} setComments={setComments} articleid={articleid} />
         <section className="vote-comment-section">
           <Vote article={article} />
-          <PostComment articleId={articleid} />
+          <PostComment articleId={articleid} onCommentPosted={() => {
+            loadArticle()
+          }} />
         </section>
         <small style={{ color: "#dee2e6" }}>
           Published on: {new Date(article.created_at).toLocaleDateString()}{" "}
